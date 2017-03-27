@@ -88,7 +88,7 @@ commit 1e5783173a17ea5fc2cd9849cfa74214ef2da4e8
 Author: name <email@example.com>
 Date:   Mon Mar 27 04:57:05 2017 +0100
 
-    append 
+    append
 ```
 使用reset命令，回退版本
 ```shell
@@ -109,7 +109,7 @@ $ git rm readme.txt
 ##### 无密码配置
 i) 生成ken-gen
 $ ssh-keygen -t rsa -C "youremail@example.com"
-window下把生成的私钥(id_rsa)与公钥(id_rsa.pub)拷贝到cygwin目录下：
+window下把生成的私钥(id_rsa)与公钥(id_rsa.pub)y以及known_hosts拷贝到cygwin目录下：
 cp /C/Users/user_name/.ssh/* /home/user_name/.ssh/
 
 ii) 配置GitHub SSH Keys
