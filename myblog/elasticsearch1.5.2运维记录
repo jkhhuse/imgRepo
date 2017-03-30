@@ -1,0 +1,51 @@
+- 索引创建失败，ik抛出异常
+```java
+org.elasticsearch.indices.IndexCreationException: [bc-logmanage_0] failed to create index
+        at org.elasticsearch.indices.IndicesService.createIndex(IndicesService.java:330)
+        at org.elasticsearch.indices.cluster.IndicesClusterStateService.applyNewIndices(IndicesClusterStateService.java:311)
+        at org.elasticsearch.indices.cluster.IndicesClusterStateService.clusterChanged(IndicesClusterStateService.java:180)
+        at org.elasticsearch.cluster.service.InternalClusterService$UpdateTask.run(InternalClusterService.java:467)
+        at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.runAndClean(PrioritizedEsThreadPoolExecutor.java:188)
+        at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.run(PrioritizedEsThreadPoolExecutor.java:158)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+        at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.NoClassDefFoundError: org/apache/http/client/ClientProtocolException
+
+```
+解决方法，把ik中的http相关包拷贝到es的lib下
+
+- 查看es集群正常，但是查看节点状态时提示索引信息被锁
+```shell
+http://10.133.5.107:9200/_status
+{"error":"ClusterBlockException[blocked by: [FORBIDDEN/9/index metadata (api)];]","status":403}
+```
+解决方法：设置索引settings中metadata为false：
+```shell
+{
+  "bc-logmanage_1" : {
+    "settings" : {
+      "index" : {
+        "creation_date" : "1489993255244",
+        "number_of_replicas" : "0",
+        "blocks" : {
+          "metadata" : "false"
+        },
+        "uuid" : "z31A_TGxTIyDPYZcHp0U-Q",
+        "analysis" : {
+          "analyzer" : {
+            "analyzer_keyword" : {
+              "filter" : "lowercase",
+              "tokenizer" : "keyword"
+            }
+          }
+        },
+        "number_of_shards" : "4",
+        "version" : {
+          "created" : "1050299"
+        }
+      }
+    }
+  }
+}
+```

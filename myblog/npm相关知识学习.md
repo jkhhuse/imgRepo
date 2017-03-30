@@ -194,3 +194,20 @@ major、minor、patch分别对应vpackage.json中version的x.x.x
 
 #### npm的语义化版本号(semver)的设定
 - 版本发布的定义
+patch，即1.0.x，代表此次更新为修复bug；
+minor，即1.x.0，代表此次更新新增了新的特性；
+major，即x.0.0，代表此次更新会破坏包的兼容性。
+
+- semver解释
+patch，1.0、1.0.x、~1.0.4
+minor，1、1.x、^1.0.4
+major，*、x
+当package.json的dependencies中的version出现如上指定时，
+npm update就会按照version的semver来更新package的版本号。
+
+#### npm node_modules的依赖关系控制
+待补充...
+
+#### facebook-yarn能做些什么事情
+待补充...
+
