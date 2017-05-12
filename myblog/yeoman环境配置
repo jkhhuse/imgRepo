@@ -1,0 +1,28 @@
+
+安装saas插件时出现如下错误：
+Error: Can't find Python executable "F:\Users\jk\AppData\Local\Programs\Python\Python36\python.EXE", you can set the PYTHON env variable.
+
+解决办法：
+If you haven't got python installed along with all the node-gyp dependecies, simply execute:
+
+npm install --global --production windows-build-tools
+and then to install the package
+
+npm install --global node-gyp
+once installed, you will all the node-gyp dependencies downloaded, but you still need the environment variable. Validate Python is indeed found in the correct folder:
+
+C:\Users\ben\.windows-build-tools\python27\python.exe 
+Note - it uses python 2.7 not 3.x as it is not supported
+
+If it doesn't moan, go ahead and create your (user) environment variable:
+
+setx PYTHON "%USERPROFILE%\.windows-build-tools\python27\python.exe"
+restart cmd, and verify the variable exists via set PYTHON which should return the variable
+
+Lastly re-apply npm install <module>
+
+最后重新编译一下node-sass
+npm rebuild node-sass --force
+
+参考资料：
+http://stackoverflow.com/questions/15126050/running-python-on-windows-for-node-js-dependencies
