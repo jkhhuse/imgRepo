@@ -1,3 +1,10 @@
+#### rsyslog简介
+rsyslog中主要存在：modules、templates、Actions、Filter等概念
+modules通常包括Input、OutPut模块，有些是内置的，有些则需要另行安装；
+rsyslog版本分为v5、v7、v8，v5比较陈旧，文档不是很完善，一般推荐使用v7或者v8；
+rsyslog支持多种插件与协议：
+![rsyslog图片](https://github.com/jkhhuse/imgRepo/tree/master/img lib/rsyslog-features-imagemap.png)
+
 #### rsyslog安装
 许多发行版linux都默认使用rsyslog，本次使用centos6.8来测试rsyslog的使用。
 centos6.8默认安装了5.8x版本的rsyslog，rsyslog版本之间差异较大，可以选择安装比较新的版本。
