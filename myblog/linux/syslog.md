@@ -1,10 +1,3 @@
-#### rsyslog简介
-rsyslog中主要存在：modules、templates、Actions、Filter等概念
-modules通常包括Input、OutPut模块，有些是内置的，有些则需要另行安装；
-rsyslog版本分为v5、v7、v8，v5比较陈旧，文档不是很完善，一般推荐使用v7或者v8；
-rsyslog支持多种插件与协议：
-![rsyslog图片](https://github.com/jkhhuse/imgRepo/blob/master/img%20lib/rsyslog-features-imagemap.png)
-
 #### rsyslog安装
 许多发行版linux都默认使用rsyslog，本次使用centos6.8来测试rsyslog的使用。
 centos6.8默认安装了5.8x版本的rsyslog，rsyslog版本之间差异较大，可以选择安装比较新的版本。
@@ -24,7 +17,7 @@ service rsyslog restart
 
 
 #### rsyslog配置文件
-> cat /etc/rsyslog.conf
+> cat /etc/rsyslog.config
 
 默认配置文件如下：
 ```shell
@@ -198,41 +191,6 @@ ruleset(name="writeRemoteData"
 }
 ```
 
-#### 示例5(日志轮询)
-syslog output默认只会输出到一个日志文件中，rsyslog只能使用output cannel去轮询日志。也可以使用logrotate命令去轮询：
-```shell
-# 安装logrotate
-> yum install logrotate crontabs 
-# 配置文件为/etc/logrotate.conf，通常轮询设置都放在/etc/logrotate.d目录下
-> vim /etc/logrotate.d/log-file 
-/var/log/log-file {
-    monthly
-    rotate 5
-    compress
-    delaycompress
-    missingok
-    notifempty
-    create 644 root root
-    postrotate
-        /usr/bin/killall -HUP rsyslogd
-    endscript
-}
-# 测试
-# 随机创建10M的日志数据
-> touch /var/log/log-file
-> head -c 10M < /dev/urandom > /var/log/log-file 
-# 模拟轮询
-> logrotate -d /etc/logrotate.d/log-file 
-```
-monthly: 日志文件将按月轮循。其它可用值为‘daily’，‘weekly’或者‘yearly’。
-rotate 5: 一次将存储5个归档日志。对于第六个归档，时间最久的归档将被删除。
-compress: 在轮循任务完成后，已轮循的归档将使用gzip进行压缩。
-delaycompress: 总是与compress选项一起用，delaycompress选项指示logrotate不要将最近的归档压缩，压缩将在下一次轮循周期进行。这在你或任何软件仍然需要读取最新归档时很有用。
-missingok: 在日志轮循期间，任何错误将被忽略，例如“文件无法找到”之类的错误。
-notifempty: 如果日志文件为空，轮循不会进行。
-create 644 root root: 以指定的权限创建全新的日志文件，同时logrotate也会重命名原始日志文件。
-postrotate/endscript: 在所有其它指令完成后，postrotate和endscript里面指定的命令将被执行。在这种情况下，rsyslogd 进程将立即再次读取其配置并继续运行。
-
 #### 附录
 ##### 更换yum源
 ```shell
@@ -245,21 +203,4 @@ postrotate/endscript: 在所有其它指令完成后，postrotate和endscript里
 > yum makecache
 > yum -y update
 ```
-##### 错误解决
-1. rsyslog自身日志
-保存在/var/log/messages中
-2. rsyslog启动失败
-centos6.8，默认使用rsyslog v5，安装v8版本，重启失败：
-```shell
-[root@dsjtest-63 ~]#  service rsyslog stop
-Shutting down system logger:                               [FAILED]
-[root@dsjtest-63 ~]#  service rsyslog restart
-Shutting down system logger:                               [FAILED]
-Starting system logger: /bin/bash: line 1: 20943 Segmentation fault      /sbin/rsyslogd -i /var/run/syslogd.pid [FAILED]
-```
-解决方法：
-在/etc/rs.d/
 
-
-#### 参考引用
-> rsyslog启动失败 http://www.linuxquestions.org/questions/linux-general-1/system-logger-fails-when-restarting-syslog-106754/
