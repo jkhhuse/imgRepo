@@ -60,10 +60,13 @@ a1.sinks.k1.channel = c1
 ```shell
 # 查看端口是否连通
 > telnet ip port
-# 端口侦听
+
+# 端口侦听(-l表示长时间监听)
 > nc -l ip port 
+
 # 抓包工具，查看指定IP与端口的网络内容，并输出到cap文件
 > tcpdump tcp port xx and host xx -w xx.cap
+
 # 查看网络连接状态
 > netstat -apn
 # 例子
@@ -74,6 +77,12 @@ tcp        0      0 192.168.174.131:36401       192.168.174.132:514         ESTA
 
 #监控
 命令行添加-Dflume.monitoring.type=http -Dflume.monitoring.port=34545
+
+#往本地端口发送UDP数据
+> echo "test1" > /dev/udp/192.168.174.132/10514
+
+#往远程UDP端口发送数据
+> echo "test" | socat - udp4-datagram:192.168.1.80:5060
 ```
 
 ### 引用

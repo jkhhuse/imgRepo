@@ -10,7 +10,6 @@
 # 安装一个generator
 > npm install --global generator-fountain-webapp
 # 安装一个基本环境(按照指引，分别选择ng、webpack、gulp、npm、es、syntax、sass)
-# 
 ```
 ##### babel设置
 提供es的转换语法，例如把es6的语法转换为es5运行。
@@ -29,9 +28,43 @@ babel-core用于在代码中进行转码
 
 ##### ES6语法
 
+##### ESLint
+###### 配置方式：
+.eslintrc.*、package.json的eslintConfig字段或者命令行中指定配置文件
+###### yeoman生成项目中的配置解释
+```json
+  "eslintConfig": {
+    "globals": {
+      "expect": true //expect全局变量可以被覆盖，如果设置为false则不可以被覆盖
+    },
+    "root": true, //限定eslint相关配置在根目录一级可以找到
+    "env": { //指定环境，全局变量将会被预定义
+      "browser": true,
+      "jasmine": true
+    },
+    "parser": "babel-eslint", //使用指令的语法解析器（eslint只兼容三种）
+    "extends": [ 
+      "xo-space/esnext" //控制代码格式，为两个空格缩进
+    ]
+  }
+```
+
 ##### Gulp4使用
+###### gulp-hub
+获取多个文件中的gulp任务
+```js
+const HubRegistry = require('gulp-hub');
+const hub = new HubRegistry([conf.path.tasks('*.js')]);
+```
+###### gulp语法
+```js
+//把文件中潜在的任务注册到gulp中，添加任务
+gulp.registry(hub);
+```
+
+
 参考资料:
-> https://github.com/gulpjs/gulp/blob/4.0/docs/API.md
+> Gulp4文档 https://github.com/gulpjs/gulp/blob/4.0/docs/API.md
 
 #### 附录
 ##### 错误1：
