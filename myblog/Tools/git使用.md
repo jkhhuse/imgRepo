@@ -258,6 +258,43 @@ $ git tag -d v1.0
 $ git push origin :refs/tags/v1.0
 ```
 
+#### 11.同一台电脑中使用多个git账号
+移除global设置
+```bash
+git config --global --unset user.name  #取消全局设置
+git config --global --unset user.email #取消全局设置
+git config -l #查看当前目录的git config
+```
+生存对应私钥/公钥
+```bash
+#账户1
+ssh-keygen -t rsa -C user1@email.com 
+#账户2
+ssh-keygen -t rsa -C user2@email.com
+```
+拷贝文件到.ssh目录下
+在github或者其他网站上添加公钥
+在.ssh下新建config文件
+```
+# 配置github.com
+Host github.com                 
+    HostName github.com
+    IdentityFile ~\\ssh\\id_rsa_github
+    PreferredAuthentications publickey
+    User user1
+
+# 配置git.oschina.net 
+Host git.oschina.net 
+    HostName git.oschina.net
+    IdentityFile ~\\ssh\\id_rsa_oschina
+    PreferredAuthentications publickey
+    User user2
+```
+建立账号互信
+```bash
+ssh -T git@github.com
+```
+
 #### 参考内容：
 > Git tutorial: https://lvwzhen.gitbooks.io/git-tutorial
 > git - 简明指南: http://rogerdudler.github.io/git-guide/index.zh.html
