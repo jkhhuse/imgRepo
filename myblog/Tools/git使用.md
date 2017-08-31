@@ -298,3 +298,4 @@ ssh -T git@github.com
 #### 参考内容：
 > Git tutorial: https://lvwzhen.gitbooks.io/git-tutorial
 > git - 简明指南: http://rogerdudler.github.io/git-guide/index.zh.html
+> 多个git账户: http://www.cnblogs.com/popfisher/p/5731232.html

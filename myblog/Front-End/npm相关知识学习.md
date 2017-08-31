@@ -209,5 +209,6 @@ npm update就会按照version的semver来更新package的版本号。
 待补充...
 
 #### facebook-yarn能做些什么事情
-待补充...
+锁定版本+缓存
+目前node v8中已经实现了package-lock.json来锁定版本。
 
