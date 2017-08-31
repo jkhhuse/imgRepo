@@ -245,6 +245,7 @@ postrotate/endscript: 在所有其它指令完成后，postrotate和endscript里
 > yum makecache
 > yum -y update
 ```
+
 ##### 错误解决
 1. rsyslog自身日志
 保存在/var/log/messages中
