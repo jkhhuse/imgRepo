@@ -265,7 +265,7 @@ git config --global --unset user.name  #取消全局设置
 git config --global --unset user.email #取消全局设置
 git config -l #查看当前目录的git config
 ```
-生存对应私钥/公钥
+生成对应私钥/公钥
 ```bash
 #账户1
 ssh-keygen -t rsa -C user1@email.com 

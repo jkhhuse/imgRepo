@@ -25,7 +25,7 @@ Module    ng g module my-module
 ```bash
 ng serve (--prod/tree-shaking --aot 启用aot编译)
 ng test 
-ng e2e
+ng e2e 
 ng build (--prod/tree-shaking --aot 启用aot编译)
 ng lint
 ```
@@ -48,19 +48,19 @@ npm install bootstrap-sass --save
 //在styles.scss中添加：
 @import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap';
 ```
-4. 在angular2中使用bootstrap4 scss
-参考StackOverflow中的一个回答：https://stackoverflow.com/questions/38534276/how-to-use-bootstrap-4-in-angular-2
+4. 在angular2中使用bootstrap4 scss  
+参考StackOverflow中的一个回答：https://stackoverflow.com/questions/38534276/how-to-use-bootstrap-4-in-angular-2  
 
 
 ### 模板
 
 #### 绑定
-视图->数据源: `(target)="statement"/on-target="statement"`
-数据源->视图: `[target]="expression"/bind-target="expression"`
-双向: `[(target)]="expression" bindon-target="expression"`
+视图->数据源: `(target)="statement"/on-target="statement"`  
+数据源->视图: `[target]="expression"/bind-target="expression"`  
+双向: `[(target)]="expression" bindon-target="expression"`  
 
 #### attribute与property
-使用下面代码可以获得所有的property：
+使用下面代码可以获得所有的property：  
 ```js
 document.body.custom = 5;
 var list = [];
@@ -81,15 +81,15 @@ console.log(list);
 这个操作符是高速TS类型检查器不做严格的值检测。
 
 #### 生命周期钩子
-ngOnInit()方法：组件中实现初始化的逻辑；
-ngOnChanges()方法：组件中的输入属性发生变化时调用；
-ngDoCheck()方法：主动监控组件中的值，例如angular无法主动获取捕捉的对象的变更， 类似于watch()；
-AfterView：提供AfterViewInit()和AfterViewChecked()方法，在组件的子视图（@ViewChild）创建后触发；
-AfterContent: 提供AfterContentInit()和AfterContetnChecked()方法，当外部内容被嵌入([transclusion技术](http://www.cnblogs.com/leosx/p/4065440.html))到组件后被调用。
-transclusion在ng2+中，父组件使用`<ng-content></ng-content>`作为占位符，嵌入相应内容。使用AfterContent无需担心单向数据流规则。
+ngOnInit()方法：组件中实现初始化的逻辑；  
+ngOnChanges()方法：组件中的输入属性发生变化时调用；  
+ngDoCheck()方法：主动监控组件中的值，例如angular无法主动获取捕捉的对象的变更， 类似于watch()；  
+AfterView：提供AfterViewInit()和AfterViewChecked()方法，在组件的子视图（@ViewChild）创建后触发；  
+AfterContent: 提供AfterContentInit()和AfterContetnChecked()方法，当外部内容被嵌入([transclusion技术](http://www.cnblogs.com/leosx/p/4065440.html))到组件后被调用。  
+transclusion在ng2+中，父组件使用`<ng-content></ng-content>`作为占位符，嵌入相应内容。使用AfterContent无需担心单向数据流规则。  
 
-####  组件交互
-1. 父组件数据传送到子组件： 
+####  组件交互  
+1. 父组件数据传送到子组件：  
 ```js
 //子组件
 @Input() hero: Hero;
@@ -246,11 +246,66 @@ onKey(value: string) {
     this.values += value + ' | ';
 }
 ```
+#### 自定义验证器(动态验证)  
+```js
+this.heroForm = new FormGroup({
+  'name': new FormControl(this.hero.name, [
+    forbiddenNameValidator(/bob/i) 
+  ])
+});
+```
+```js
+/** A hero's name can't match the given regular expression */
+export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} => {
+    const forbidden = nameRe.test(control.value);
+    return forbidden ? {'forbiddenName': {value: control.value}} : null;
+  };
+}
+```
+模板中定义：  
+```html
+<input id="name" class="form-control"
+       formControlName="name" required >
+<div *ngIf="name.invalid && (name.dirty || name.touched)"
+     class="alert alert-danger">
+  <div *ngIf="name.errors.forbiddenName">
+    Name cannot be Bob.
+  </div>
+</div>
+```
+#### 自定义验证器(模板验证)  
+注入时的multi，是因为表示同样的服务可以注入多次。例如NG_VALIDATORS可以被注入多次。  
+```js
+import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn, Validators } from '@angular/forms';
+
+/** A hero's name can't match the given regular expression */
+export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} => {
+    const forbidden = nameRe.test(control.value);
+    return forbidden ? {'forbiddenName': {value: control.value}} : null;
+  };
+}
+
+@Directive({
+  selector: '[forbiddenName]',
+  providers: [{provide: NG_VALIDATORS, useExisting: ForbiddenValidatorDirective, multi: true}]
+})
+export class ForbiddenValidatorDirective implements Validator {
+  @Input() forbiddenName: string;
+
+  validate(control: AbstractControl): {[key: string]: any} {
+    return this.forbiddenName ? forbiddenNameValidator(new RegExp(this.forbiddenName, 'i'))(control)
+                              : null;
+  }
+}
+```
 
 
-### 路由
-#### 路由基础知识
-使用`RouterModule.forRoot`方法配置路由，路由匹配使用先匹配者优先:
+### 路由  
+#### 路由基础知识  
+使用`RouterModule.forRoot`方法配置路由，路由匹配使用先匹配者优先:  
 ```js
 imports: [
     RouterModule.forRoot(
@@ -259,26 +314,26 @@ imports: [
     )
   ],
 ```
-路由出口:
+路由出口:  
 ```html
 <router-outlet></router-outlet>
 ```
-路由器链接:
-RouterLinkActive可以帮助用户区分路由是否活动。
+路由器链接:  
+RouterLinkActive可以帮助用户区分路由是否活动。  
 ```html
 <a routerLink="/crisis-center" routerLinkActive="active">Crisis Center</a>
 ```
-路由状态：
-可以通过Router服务的RouterState值来获得当前的路由状态值。
+路由状态： 
+可以通过Router服务的RouterState值来获得当前的路由状态值。  
 路由事件:
-NavigationStart 
+NavigationStart  
 RoutesRecognized  
-RouteConfigLoadStart 
+RouteConfigLoadStart  
 RouteConfigLoadEnd  
 NavigationEnd  
-NavigationCancel 
-NavigationError 
-#### Activated Route
+NavigationCancel  
+NavigationError  
+#### Activated Route  
 ```js
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
@@ -289,7 +344,7 @@ ngOnInit() {
     .subscribe((hero: Hero) => this.hero = hero);
 }
 ```
-#### 第二路由
+#### 第二路由  
 定义  
 ```js
 {
@@ -302,39 +357,39 @@ ngOnInit() {
 ```html
 <router-outlet name="popup"></router-outlet>
 ```
-在上层中调用  
+在上层中调用   
 ```html
 <a [routerLink]="[{ outlets: { popup: ['compose'] } }]">Contact</a>
 ```
-开启第二路由后,导航栏中会出现:`(popup:compose)`,清除第二路由:
+开启第二路由后,导航栏中会出现:`(popup:compose)`,清除第二路由:  
 ```js
 this.router.navigate([{ outlets: { popup: null }}]);
 ```
-#### 路由守卫
-
+#### 路由守卫  
+待补充
 
 
 ### code style/tip  
 推荐使用VS Code编辑器，可以安装如下插件:  
 TSLint: TS 语法检查;  
 Angular v4 TypeScript Snippets: 语法补全;  
-Angular 2+ Snippets - TypeScript, Html, ngRx, Angular Flex Layout, Material & Testing: 代码补全;  
-Path Intellisense: 补全文件路径;
+Angular 2+ Snippets - TypeScript, Html, ngRx, Angular Flex Layout, Material & Testing: 代码补全;   
+Path Intellisense: 补全文件路径;  
 
-简单的几个风格说明：
-HTML中推荐使用双引号，ts文件中使用单引号；
-指令拼写形式使用大驼峰UpperCamelCase和小驼峰lowerCamelCase；
-写组件时，如果HTML模板很长，可以把HTML独立成一个文件引入或者考虑拆分组件，独立的HTML文件命名最好与组件名称相同；
+简单的几个风格说明：  
+HTML中推荐使用双引号，ts文件中使用单引号；  
+指令拼写形式使用大驼峰UpperCamelCase和小驼峰lowerCamelCase；  
+写组件时，如果HTML模板很长，可以把HTML独立成一个文件引入或者考虑拆分组件，独立的HTML文件命名最好与组件名称相同；  
 
 
 常用快捷键:
-格式化: `Shift`+`Alt`+`F`，按照TSLint设置的规则进行Format。也可以利用VS Code中的强大的代码提示功能来修改;
-导航历史切换: `Alt`+`Left`，`Alt`+`Right`，来查看前一次/后一次光标的位置;
-寻找文件: `Ctrl`+`P`
-语法提示: `Ctrl+Space`
+格式化: `Shift`+`Alt`+`F`，按照TSLint设置的规则进行Format。也可以利用VS Code中的强大的代码提示功能来修改;  
+导航历史切换: `Alt`+`Left`，`Alt`+`Right`，来查看前一次/后一次光标的位置;  
+寻找文件: `Ctrl`+`P`  
+语法提示: `Ctrl+Space`  
 
 ### 附录：
-1. 一个setTimeout()用法
+1. 一个setTimeout()用法  
 在angular官方文档中看到如下用法，有所不解:
 ```js
   // schedules a view refresh to ensure display catches up
@@ -360,6 +415,6 @@ HTML中推荐使用双引号，ts文件中使用单引号；
 function f(fn) {setTimeout(fn,0);}
 setTimeout在队列中添加一个消息，待队列中其他消息处理完毕后，开启调用。
 ```
-附一个setTimeout()的链接：https://zhuanlan.zhihu.com/p/26962590
+附一个setTimeout()的链接：https://zhuanlan.zhihu.com/p/26962590  
 2. 
 
