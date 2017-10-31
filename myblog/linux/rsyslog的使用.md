@@ -163,7 +163,7 @@ action(type="omfile" dirCreateMode="0700" FileCreateMode="0644"
        File="/var/log/test123")
 ```
 
-#### 示例4(大批量数据的高性能)接收方式)
+#### 示例4(大批量数据的高性能 )接收方式)
 建议使用较新版本的linux内核，因为其支持recvmmsg()调用，能够提升UDP接收的速度并减低CPU的利用率；
 imptcp模式依赖于Linux支持TLS，否则使用imtcp代替；
 使用buffered模式，保证缓冲区满后才写入，或者当写文件关闭后写入；

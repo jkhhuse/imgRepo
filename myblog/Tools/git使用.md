@@ -55,6 +55,7 @@ $ git commit -m "append"
 新建一个文件，未添加前状态为“Untracked”，即未被Git版本追踪：
 ```shell
 $ git status
+
 On branch master
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
@@ -72,16 +73,23 @@ Changes to be committed:
 
         new file:   readme.txt
 ```
-commit一个文件：
+缓存区diff
+`git diff --cached > ./`  
+
+commit一个文件：  
 ```shell
 jk@jk-pc /cygdrive/e/learn/git/img
 $ git status
 On branch master
 nothing to commit, working tree clean
 ```
+修改本地的commit提交：  
+```shell
+$ git commit --amend
+```
 
 #### 5.版本回退
-通过git log查看提交记录
+通过git log查看提交记录  
 ```shell
 $ git log
 commit 1e5783173a17ea5fc2cd9849cfa74214ef2da4e8
@@ -90,7 +98,8 @@ Date:   Mon Mar 27 04:57:05 2017 +0100
 
     append
 ```
-使用reset命令，回退版本
+使用reset命令，回退版本，包括代码的回退  
+慎用！！！会丢失所有未commit的代码，使用--soft代替它。
 ```shell
 $ git reset --hard 1e5783173a17ea5fc2cd9849cfa74214ef2da4e8
 ```
@@ -174,10 +183,15 @@ v) 查看分支
 ```shell
 $ git branch
 ```
+vi) 提交  
+```shell
+$ git push origin HEAD:refs/for/{branchname}
+```
 
 ##### 更新本地仓库
 ```shell
 $ git pull
+http://www.01happy.com/git-resolve-conflicts/
 ```
 如果出现冲突则，可以使用diff命令查看差异。
 ```shell

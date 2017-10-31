@@ -301,6 +301,82 @@ export class ForbiddenValidatorDirective implements Validator {
   }
 }
 ```
+#### 响应式表单
+AbstractControl：是下面三个表单类的基类，提供一些共同的行为与属性。  
+FormControl：对应HTML表单控件，用于跟踪单个表单控件的值和有效性状态。  
+FormGroup：检测一组AbstractControl实例的值和有效性状态。组件中的表单的form就是一个FormGroup。  
+FormArray：检测一组AbstractControl实例组成的有序数组的值和有效性状态。  
+FormBuilder：能通过处理控件创建的细节问题来帮我们减少重复劳动。  
+1. FormControl使用  
+fromControlName="name"与js中name关联。在模板中formGroup为一个指令，获得heroForm的值。   
+```html
+<form [formGroup]="heroForm" novalidate>
+  <div class="form-group">
+    <label class="center-block">Name:
+      <input class="form-control" formControlName="name">
+    </label>
+  </div>
+</form>
+```
+```js
+export class HeroDetailComponent2 {
+  heroForm = new FormGroup ({
+    name: new FormControl()
+  });
+}
+```
+2. FormBuilder使用  
+使用FormBuilder后，可以把创建表单的工作交由FormBuilder完成：  
+```js
+export class HeroDetailComponent3 {
+  heroForm: FormGroup; // <--- heroForm is of type FormGroup
+  constructor(private fb: FormBuilder) { // <--- inject FormBuilder
+    this.createForm();
+  }
+  this.heroForm = this.fb.group({
+    name: ['', Validators.required ],
+  });
+}
+```
+嵌套的FormBuilder写法：  
+```js
+ this.heroForm = this.fb.group({ // <-- the parent FormGroup
+      name: ['', Validators.required ],
+      address: this.fb.group({ // <-- the child FormGroup
+        street: ''
+      })
+    });
+```
+对应的模板如下：  
+```html
+<div formGroupName="address" class="well well-lg">
+  ...
+  <input class="form-control" formControlName="street">
+</div>
+```
+3. 操纵表单模型  
+setValue方法：  
+```js
+this.heroForm.setValue({
+  name:    this.hero.name,
+  address: this.hero.addresses[0] || new Address()
+});
+```
+patchValue方法,与setValue相比，不会检查缺失的控件值，并且不会抛出有用的错误信息：    
+```js
+this.heroForm.patchValue({
+  name: this.hero.name
+});
+```
+reset方法，恢复控件状态为pristine：  
+```js
+this.heroForm.reset({
+  name: this.hero.name,
+  address: this.hero.addresses[0] || new Address()
+});
+```
+4. 
+
 
 
 ### 路由  

@@ -23,6 +23,6 @@
 3. 启动调试：![vs debug](https://github.com/jkhhuse/imgRepo/blob/master/img%20lib/vsdebug.png)  
 
 
-### 参考
-> [Visual Studio Code, Debugger For Chrome and ASP.NET 5](http://mobilemancer.com/2015/11/23/vs-code-debugger-for-chrome-and-asp-net-5/)
-> [connect ECONNREFUSED 127.0.0.1:9222](https://github.com/Microsoft/vscode-chrome-debug#cannot-connect-to-the-target-connect-econnrefused-1270019222)
+### 参考  
+> [Visual Studio Code, Debugger For Chrome and ASP.NET 5](http://mobilemancer.com/2015/11/23/vs-code-debugger-for-chrome-and-asp-net-5/)  
+> [connect ECONNREFUSED 127.0.0.1:9222](https://github.com/Microsoft/vscode-chrome-debug#cannot-connect-to-the-target-connect-econnrefused-1270019222)  

@@ -5,3 +5,12 @@
 解决方法：
 df -h查看一下磁盘空间，整理出一些空间，则可以正常启动服务。
 
+2. 修改文件打开limit
+ulimt -a 查看
+ulimit -n num 修改为num
+/etc/security/limits.conf
+增加
+user soft nofile 65536
+user hard nofile 65536
+
+
