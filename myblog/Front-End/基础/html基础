@@ -1,0 +1,33 @@
+#### 1. html5新特性
+声明方式变更为!DOCTYPE html
+required
+autofocus
+多媒体支持：audio、video
+pattern
+local storage
+indexed DB
+Geolocation 
+websocket
+svg/canvas/WebGL
+input 新增类型：date、number、color、search、email
+
+#### 2. localstorage与cookies区别
+cookies在cors的http请求中携带，在client和server端来回传递
+localstorage本地保存
+cookie有path概念，大小为4k
+localstorage大小为5M
+cookie有超时设置
+localstorage支持事件通知机制
+
+#### 3. input与textarea区别
+value属性
+rows cols属性
+
+
+#### 4. attribute与property区别
+attribute是hmtl文档标签属性
+property是对应dom元素的自身属性
+attribute可以通过dom core规范的接口 getAttribute和setAttribute操作
+id，title，lang，dir，className
+
+参考：https://www.cnblogs.com/wangfupeng1988/p/3631853.html

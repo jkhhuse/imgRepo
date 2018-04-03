@@ -1,0 +1,35 @@
+### 1. jsonnp原理
+动态创建<script>标签，然后利用<script>的src不受同源策略约束来跨域获取数据。
+javascript callback
+
+### 2. 前端安全问题
+http://web.jobbole.com/92875/
+https://www.jianshu.com/p/9edcda47a04a
+
+XSS攻击
+防御XSS最佳的做法就是对数据进行严格的输出编码，使得攻击者提供的数据不再被浏览器认为是脚本而被误执行。
+HTTP Header、输入验证、开启浏览器XSS防御
+
+iframe
+挂马、恶意程序
+sandbox
+allow-forms：允许iframe中提交form表单
+allow-popups：允许iframe中弹出新的窗口或者标签页（例如，window.open()，showModalDialog()，target=”_blank”等等）
+allow-scripts：允许iframe中执行JavaScript
+allow-same-origin：允许iframe中的网页开启同源策略
+
+缺乏静态资源完整性校验
+
+本地存储数据泄露
+
+
+### 3. HTTPS
+
+### 4. get与post区别
+GET用于信息获取，而且应该是安全的和幂等的
+GET方式提交的数据最多只能是1024字节，理论上POST没有限制，可传较大量的数据
+POST    /url      创建  
+DELETE  /url/xxx  删除  
+PUT     /url/xxx  更新
+GET     /url/xxx  查看
+

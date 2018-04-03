@@ -1,0 +1,74 @@
+### 1. 深拷贝&浅拷贝
+浅拷贝只会将对象的各个属性进行依次复制
+var obj = { a:1, arr: [2,3] };
+var shallowObj = shallowCopy(obj);
+
+function shallowCopy(src) {
+  var dst = {};
+  for (var prop in src) {
+    if (src.hasOwnProperty(prop)) {
+      dst[prop] = src[prop];
+    }
+  }
+  return dst;
+}
+
+深拷贝会对子属性进行递归复制
+var cloneObj = function(obj){
+    var str, newobj = obj.constructor === Array ? [] : {};
+    if(typeof obj !== 'object'){
+        return;
+    } else if(window.JSON){
+        str = JSON.stringify(obj), //系列化对象
+        newobj = JSON.parse(str); //还原
+    } else {
+        for(var i in obj){
+            newobj[i] = typeof obj[i] === 'object' ? 
+            cloneObj(obj[i]) : obj[i]; 
+        }
+    }
+    return newobj;
+};
+
+
+### 2. js异步
+回调
+监听
+发布/订阅
+promise
+generate
+
+generate
+yield/next
+function* gen() {
+    yield "1";
+    yield "2"
+}
+
+### 3. 原型链
+console.log(person1.__proto__ === Person.prototype); 
+
+### 4. 箭头函数中的this
+深入理解ES6箭头函数中的this
+this是继承自父执行上下文
+var x=11;
+var obj={
+ x:22,
+ say:()=>{
+   console.log(this.x);
+ }
+}
+obj.say();
+//输出的值为11
+
+箭头函数的 this 始终指向函数定义时的 this，而非执行时。
+
+
+### 4. 事件模型
+
+W3C中定义事件的发生经历三个阶段：捕获阶段（capturing）、目标阶段（targetin）、冒泡阶段（bubbling）
+冒泡型事件：当你使用事件冒泡时，子级元素先触发，父级元素后触发
+捕获型事件：当你使用事件捕获时，父级元素先触发，子级元素后触发
+DOM事件流：同时支持两种事件模型：捕获型事件和冒泡型事件
+阻止冒泡：在W3c中，使用stopPropagation（）方法；在IE下设置cancelBubble = true
+阻止捕获：阻止事件的默认行为，例如click - <a>后的跳转。在W3c中，使用preventDefault（）方法，在IE下设置window.event.returnValue = false

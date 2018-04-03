@@ -1,0 +1,154 @@
+## CSS部分
+
+1. css3新增属性
+选择器：
+E:nth-last-child(n) 
+E:nth-of-type(n) 
+E:nth-last-of-type(n) 
+E:last-child 
+E:first-of-type 
+E:only-child 
+E:only-of-type 
+E:empty 
+E:checked 
+E:enabled 
+E:disabled 
+E::selection 
+E:not(s)
+
+transform 形变
+transition 过渡
+animation 动画
+border-radius
+box-shadow
+word-wrap换行
+text-overflow: 文字溢出时的处理 clip/ellipsis
+
+object-position/object-fit
+
+backgroud-size：定义背景图片大小
+backgourd-position：定位，padding-box/border-box/content-box
+
+@Font-face
+
+2. css选择器总结
+
+3. link与@import区别
+link是html中引入，@import是css方式
+link并行下载，@import串行下载
+FOUC 加载样式表钱，浏览器使用默认样式显示文档
+
+4. 清除浮动
+clear:both
+父级div :after zoom
+overflow: hidden
+
+5. inline block
+inline: em/label/input/img/a/span
+width/height/margin/padding
+block:p/div/form/pre/h1-h6/ul/ol/dl
+height/width无效、padding/margin的left和right有效，top和bottom无效
+
+6. 伪元素
+::after ::before
+不会改变dom
+
+7. 动画
+transform：定义元素的变化结果，包含rotate、scale、skew、translate。
+
+8. 垂直居中
+针对inline元素
+a) 父子元素的上下padding相等
+父元素 padding：50px;
+子元素 padding: 50px 0;
+b) 子元素的line-height与父容器的高度相等
+父元素 height: 100px;
+子元素 line-height: 100px;
+针对block元素
+a) felx
+父级元素 display flex
+子元素  align-items: center; justify-content: center;
+b) 利用元素已知宽高，block元素宽高一半
+.demo {
+  position: relative;
+  background-color: black;
+  height: 400px;
+  width: 100%;
+}
+
+.child {
+  position: absolute;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  height: 100px;
+  width: 100px;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+c) 利用transform
+.demo {
+  position: relative;
+  background-color: black;
+  height: 400px;
+  width: 100%;
+}
+
+.child {
+  position: absolute;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  height: 100px;
+  width: 100px;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+9. css布局相关
+### 左边定宽，右边自适应
+a) float方式
+left float width
+right margin-left: width; 
+b) flex
+flex: 1
+c) calc
+width: calc(100vw-200px);
+d) 负边距
+<div class="container">
+	<section class="right">Right</section>
+</div>
+<aside class="left">Left</aside>
+container float:left; width 100%;
+right margin-left: 200px;
+left float:left; margin-left: -100%;
+
+
+10. felx布局
+flex-direction: row | row-reverse | column | column-reverse;
+属性决定主轴的方向（即项目的排列方向）。
+flex-wrap:nowrap | wrap | wrap-reverse;
+flex-flow: <flex-direction> || <flex-wrap>;
+justify-content: flex-start | flex-end | center | space-between | space-around;
+align-items:flex-start | flex-end | center | baseline | stretch;
+交叉轴对齐方式
+align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+多轴对齐
+
+针对单个元素布局：
+order，flex-grow，flex-shrink，flex-basis，flex，align-self
+
+#### js部分
+
+
+#### ts部分
+
+
+#### 通用
+跨域
+缓存
+http协议
+
+
+#### angular部分
+
+#### 项目部分
