@@ -4,7 +4,7 @@
 
 ## 拖拽事件控制
 
-在拖拽事件的控制中涉及到click、
+在拖拽事件的控制中涉及到mousemove、mouseup、mouseup等事件。
 
 ### 事件流注册  
 Angular中可以使用rxjs来实现事件机制，例如fromEvent来创建一个事件：
