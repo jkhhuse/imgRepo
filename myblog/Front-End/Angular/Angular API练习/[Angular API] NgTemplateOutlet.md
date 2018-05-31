@@ -119,5 +119,84 @@ prev按钮的生成是通过定义`[ngTemplateOutletContext]="{ $implicit: 'prev
   }
 ```
 
-### Angular中实现源码解读
+### Angular源码解读
 
+首先放出源码中的实现代码：
+```js
+private _viewRef: EmbeddedViewRef<any>;
+
+@Input() public ngTemplateOutletContext: Object;
+
+@Input() public ngTemplateOutlet: TemplateRef<any>;
+
+constructor(private _viewContainerRef: ViewContainerRef) {}
+
+ngOnChanges(changes: SimpleChanges) {
+  const recreateView = this._shouldRecreateView(changes);
+
+  if (recreateView) {
+    if (this._viewRef) {
+      this._viewContainerRef.remove(this._viewContainerRef.indexOf(this._viewRef));
+    }
+
+    if (this.ngTemplateOutlet) {
+      this._viewRef = this._viewContainerRef.createEmbeddedView(
+          this.ngTemplateOutlet, this.ngTemplateOutletContext);
+    }
+  } else {
+    if (this._viewRef && this.ngTemplateOutletContext) {
+      this._updateExistingContext(this.ngTemplateOutletContext);
+    }
+  }
+}
+```
+
+在onchange中获得当前绑定的两个属性的状态检测情况，即changes中包含两个属性：`ngTemplateOutletContext`、`ngTemplateOutlet`。
+
+首先需要判断是否需要重新进行view attach操作，通过`this._shouldRecreateView(changes)`方法判断。
+
+```js
+private _shouldRecreateView(changes: SimpleChanges): boolean {
+  const ctxChange = changes['ngTemplateOutletContext'];
+  return !!changes['ngTemplateOutlet'] || (ctxChange && this._hasContextShapeChanged(ctxChange));
+}
+
+private _hasContextShapeChanged(ctxChange: SimpleChange): boolean {
+  const prevCtxKeys = Object.keys(ctxChange.previousValue || {});
+  const currCtxKeys = Object.keys(ctxChange.currentValue || {});
+
+  if (prevCtxKeys.length === currCtxKeys.length) {
+    for (let propName of currCtxKeys) {
+      if (prevCtxKeys.indexOf(propName) === -1) {
+        return true;
+      }
+    }
+    return false;
+  } else {
+    return true;
+  }
+}
+```
+在这个过程中存在集中情况：context对象的变化（值变化与Shape变化）、templateRef变化。
+
+`!!changes['ngTemplateOutlet']` 用于判断`<ng-template></ng-template>` 是否变化。
+
+`this._hasContextShapeChanged(ctxChange)` 用于判断 `context`上下文对象是否发生变化，这个变化包括两种情况，值变化与Shape变化，如下所示：
+
+```html
+<ng-template let-ctx #tpl>{{ctx.foo}}</ng-template>
+<ng-container *ngTemplateOutlet="tpl; context: context"></ng-container>
+```
+```js
+this.context = {$implicit: {foo: 'bar'}};
+// 值变化为
+this.context = {$implicit: {foo: 'bar1'}};
+// Shape变化
+this.context = {$implicit: {foo: 'bar1'}, $ctx: {foo: 'bar2'}};
+```
+
+针对值变化，只需要更新`ngTemplateOutletContext` 对象中的属性值。
+
+针对Shape变化，需要根据情况来从container中remove emberView，再重新create emberView。
+
+最后，如果templateRef变化，也会与Shape的处理一样。
