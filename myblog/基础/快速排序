@@ -1,0 +1,46 @@
+### 快排简介
+快速排序是一个非稳定的排序算法，其时间复杂度为O(nlogn)，最坏情况下为O(n*n)，空间复杂度为O(logn)~O(n)之间。  
+在v8引擎中[array.js](https://github.com/v8/v8/blob/cf88badcfe49cb3b12c59affebb2a6a91f6e8d84/src/js/array.js) 实现了插入排序和快速排序。  
+在快排的实现中，有这样注释：`// Insertion sort is faster for short arrays.`，即在数组长度较短时，插入排序性能是优于快速排序的。  
+
+### 先来一个基础的快速排序
+快排思想其实也不复杂，其采用分而治之的思路，从数组中选择一个哨兵，把大于哨兵的值置于其右侧，小于哨兵的值置于其左侧。第一步会把这个数组分为两个部分，其后再次采用此做法，递归解析直至排序结束。
+算法js实现：
+```js
+  var array = [10,0,4,5,6,7,2,1,9,3];
+  var low = 0;
+  var high = array.length-1;
+  Sort(array, low, high);
+  console.log(array.join(','));
+  function Sort(array, low, high) {
+    var newPivot;
+    if (low < high) {
+      newPivot = Partition(array, low, high);
+      Sort(array, low, newPivot-1);
+      Sort(array, newPivot+1, high);
+    }
+  }
+
+  function Partition(array, low, high) {
+    var pivot = array[low];
+    while (low<high) {
+      while(low<high && array[high]>=pivot) {
+        high--;
+      }
+      Swap(array, low, high);
+      while(low<high && array[low]<=pivot) {
+        low++;
+      }
+      Swap(array, low, high);
+    }
+    return low;
+  }
+
+  function Swap(array, low ,high) {
+    var temp;
+    temp = array[low];
+    array[low] = array[high];
+    array[high] = temp;
+  }
+```
+

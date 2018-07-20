@@ -205,6 +205,46 @@ open:自动在浏览器中打开
 #### 热加载
 热加载可以改变、添加、移除模块，并且不会重新加载页面。
 
+#### Lazy Loading 
+第一步：配置webpack.config.js中的output
+```js
+output: {
+    path: resolve(__dirname, 'dist'),
+    /*在webpack配置文件中的output路径配置chunkFilename属性*/
+    filename: options.dev ? '[name].js' : '[name].js?[chunkhash]',
+    chunkFilename: './src/chunk/chunk[id].js?[chunkhash]'
+    /*chunkFilename路径将会作为组件懒加载的路径*/
+}
+```
+第二步：异步加载方式
+`() => import(URL)`，需要配合babel的syntax-dynamic-import插件。  
+```js
+{
+    "presets": [
+        ["es2015", { "modules": false }]
+    ],
+    "plugins": ["syntax-dynamic-import"]
+}
+```
+第三步：在路由中进行配置
+```js
+const Body = () => import(/* webpackChunkName: "body"*/ './components/Body/Body.vue');
+const Index = () => import(/* webpackChunkName: "body"*/ './components/Index/Index.vue');
+const routes = [
+  { path: '/Index', component: Index}
+]
+const router = new VueRouter({
+  routes
+})
 
+new Vue({
+  el: '#body',
+  router:router,
+  render: h => h(Body)
+});
+```
+
+## 参考：  
 > Webpack中文指南 http://zhaoda.net/webpack-handbook/index.html  
 > Webpack2.x文档 https://webpack.js.org/guides
+> Webpack懒加载 https://www.jianshu.com/p/ecea5f54db07
