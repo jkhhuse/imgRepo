@@ -72,3 +72,33 @@ W3C中定义事件的发生经历三个阶段：捕获阶段（capturing）、�
 DOM事件流：同时支持两种事件模型：捕获型事件和冒泡型事件
 阻止冒泡：在W3c中，使用stopPropagation（）方法；在IE下设置cancelBubble = true
 阻止捕获：阻止事件的默认行为，例如click - <a>后的跳转。在W3c中，使用preventDefault（）方法，在IE下设置window.event.returnValue = false
+
+### 5. Symbol类型  
+可以用于属性名，但是不能用点运算符来访问属性。如果用点运算符来给对象的属性Symbol类型的值，实际上属性名会变成一个字符串。定义时，需把symbol属性放入[]之中。
+```js
+let a = {};
+let s4 = Symbol();
+// 第一种写法
+a[s4] = 'mySymbol';
+// 第二种写法
+a = {
+    [s4]: 'mySymbol'
+}
+// 第三种写法
+Object.defineProperty(a, s4, {value: 'mySymbol'});
+a.s4;  //  undefined
+a.s4 = 'mySymbol';
+a[s4]  //  undefined
+a['s4']  // 'mySymbol'
+```
+for...in和for...of都无法遍历到Symbol值的属性，
+
+### 6. for...in与for...of
+for in是ES5标准,for of是ES6标准;for in是遍历对象属性,for of是遍历对象元素。
+for in 可以遍历出自定义添加的属性
+for of 利用Object.keys可以遍历对象
+```js
+for (var key of Object.keys(someObject)) {
+  console.log(key + ": " + someObject[key]);
+}
+```
