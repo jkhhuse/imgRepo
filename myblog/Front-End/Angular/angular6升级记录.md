@@ -136,6 +136,6 @@ Angular6的这次升级，给Angular带来了重大变革，优化了性能/发�
 - Angular CLI 官方支持组件库的生成，使用命令`ng generate library [name]`
 
 ### 引用
-> peer-dependencies https://nodejs.org/en/blog/npm/peer-dependencies/
+> https://nodejs.org/en/blog/npm/peer-dependencies/
 > https://update.angular.io/
 > https://blog.angular.io/version-6-of-angular-now-available-cc56b0efa7a4 
