@@ -10,8 +10,7 @@ function LinkedList() {
   this.head = null;
   this.length = 0;
 
-  this.add = function(data) {
-    var node = new Node(data);
+  this.add = function(node) {
     var nodeCheck = this.head;
 
     // 是否存在头结点
@@ -100,15 +99,56 @@ LinkedList.prototype.insert = function(position, node) {
   return node;
 }
 
+/**
+ * 删除指定节点
+ * @param {*} node节点
+ */
+LinkedList.prototype.deleteNode = function(node) {
+    node.val = node.next.val;
+    node.next = node.next.next;
+    this.length--;
+}
+
+/**
+ * 删除链表中第一个指定值对应的节点
+ * @param {*} value 值
+ */
+LinkedList.prototype.deleteByValue = function(value) {
+    var count = 0;
+    var nodeCheck = this.head;
+    var prevNode = this.head;
+    var flag = false;
+    while(count<this.length) {
+        if(nodeCheck.data === value) {
+            flag = true;
+            break;
+        }
+        prevNode = nodeCheck;
+        nodeCheck = nodeCheck.next;
+        count++;
+    }
+    prevNode.next = nodeCheck.next;
+    nodeCheck = null;
+    this.length--;
+    return flag;
+}
+
 var linkedList = new LinkedList();
-linkedList.add(1);
-linkedList.add(2);
-linkedList.add(3);
-linkedList.add(4);
+var node1 = new Node(1);
+linkedList.add(node1);
+var node2 = new Node(2);
+linkedList.add(node2);
+var node3 = new Node(3);
+linkedList.add(node3);
+var node4 = new Node(4);
+linkedList.add(node4);
 console.log(linkedList);
-console.log(linkedList.get(2));
-linkedList.remove(2);
+// linkedList.deleteNode(node3);
+// linkedList.deleteByValue(3);
 console.log(linkedList);
-var _node = new Node(0);
-linkedList.insert(2, _node);
-console.log(linkedList);
+// console.log(linkedList.get(2));
+// linkedList.remove(2);
+// console.log(linkedList);
+// var _node = new Node(0);
+// linkedList.insert(2, _node);
+// console.log(linkedList);
