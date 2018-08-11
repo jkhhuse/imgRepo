@@ -1,7 +1,18 @@
 ## repo说明
 技术博客&工作记录存档，较为完整的记录放置在issue中
 
+### Blog
+- [Angular6 升级指南] (https://github.com/jkhhuse/imgRepo/issues/9)
+- [波浪动画效果] (https://github.com/jkhhuse/imgRepo/issues/8)
+- [[Angular API] NgTemplateOutlet 理解] (https://github.com/jkhhuse/imgRepo/issues/7)
+- [Angular可拖拽应用的实现] (https://github.com/jkhhuse/imgRepo/issues/6)
 - [npm--优秀包管理器的发展历程](https://github.com/jkhhuse/imgRepo/issues/4)
 - [Angular4升级到Angular5的升级记录](https://github.com/jkhhuse/imgRepo/issues/3)
 - [Flume的使用](https://github.com/jkhhuse/imgRepo/issues/2)
 - [rsyslog的使用](https://github.com/jkhhuse/imgRepo/issues/1)
+
+### 数据结构与算法
+单项链表
+
+### Leetcode
+见目录
