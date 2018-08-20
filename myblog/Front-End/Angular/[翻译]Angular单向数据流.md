@@ -100,7 +100,7 @@ Angular2 更新应用中model和解析model至view是位于两个不同的处理
 
 在web环境下，view层中为使用DOM等技术来展示用户数据，在Angular中view层则由组件实现。service层则负责处理与存储业务相关的数据。像上图所示，service层包含了状态管理、REST调用、可重用的通用工具服务等。
 
-之前解释的单向数据流是与应用的view层相关，Angular中的view由组件呈现，所以单向数据流其实就可以表现为组件之间的数据流动。
+之前解释的单向数据流是与应用的view层相关，Angular中的view由组件呈现，所以单向数据流其实就可以表现为组件之间的数据流动。  
 ![data flow](https://github.com/jkhhuse/imgRepo/blob/master/img%20lib/dataflow.png?raw=true)
 
 然而，当引入ngrx（实现了类似Redux的状态管理模式）之后，又会陷入另外一种困惑。Redux的文档中关于状态的描述：
