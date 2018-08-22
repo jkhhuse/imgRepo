@@ -152,4 +152,4 @@ export class SizerComponent {
 
 `ngModel`指令也是同样，它其实是可以分解为`[ngModel]`与`(ngModelChange)`两个部分。
 
-最后，本篇文章着重讲了单向数据流的概念周边，为了进一步理解Angular的change detection机制及更多其他的知识点，我还将陆续写作/写作一些文章或者资料帮助加深自己对Angular的理解。
+最后，本篇文章着重讲了单向数据流的概念周边，为了进一步理解Angular的change detection机制及更多其他的知识点，我还将陆续翻译/写作一些文章或者资料帮助加深自己对Angular的理解。
