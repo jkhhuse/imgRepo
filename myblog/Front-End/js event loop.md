@@ -8,7 +8,7 @@
 
 ![js_engine_model](https://github.com/jkhhuse/imgRepo/blob/master/img%20lib/event_loop.png?raw=true)
 
-### 栈(Stack)
+#### 栈(Stack)
 首先是栈结构，函数调用会形成一个栈帧，以“后进先出”的顺序执行，例如一段函数：
 ```js
 function foo(b) {
@@ -27,20 +27,20 @@ console.log(bar(7));
 
 ![js_engine_model](https://github.com/jkhhuse/imgRepo/blob/master/img%20lib/js_stack.png?raw=true)
 
-### 堆(Stack)
+#### 堆(Stack)
 对象被分配在一个堆中，用以表示一个大部分非结构化的内存区域。
 
-### 队列(Queue)
+#### 队列(Queue)
 这个队列包含了javascript运行过程中待处理的任务，也可以称之为“任务队列”，在Event loop的某个时刻，任务队列中的函数会以先进先出的方式被移出队列，创建栈帧，当`栈为空`时压入栈底部。
 
-### Web APIs
+#### Web APIs
 通常指浏览器提供的能力，也可以把它理解为异步事件，例如SetTimeout、DOM option，如click事件、XHR等。当js程序处理异步调用时，会执行异步调用，异步调用结束后，则把回调函数添加到任务队列中。
 
 javascript是一个单线程语言，在处理类似上一个代码片段时，函数顺序压入栈中执行。那么遇到异步任务时，函数执行不可能陷入停顿，等待异步任务执行完毕后再继续执行。处理这种情况的技术正是Event loop机制。
 
 所以，Event loop是一个持续处理的过程，用于判断栈中是否为空，如果栈为空，那么从任务队列中获取一个任务放入栈中执行。
 
-### 事件循环示例
+#### 事件循环示例
 
 首先，先想一下下面程序的运行过程：
 ```js
@@ -64,7 +64,7 @@ Click the button!
 
 那么，为了验证这个过程，可以使用[Philip Reberts](https://github.com/latentflip/loupe)写的工具来验证，它可视化模拟javascript事件循环的工具。
 
-![js_engine_model](https://github.com/jkhhuse/imgRepo/blob/master/img%20lib/event_loop_demo1.png?raw=true)
+![js_engine_model](https://github.com/jkhhuse/imgRepo/blob/master/img%20lib/event_loop_demo1.gif?raw=true)
 
 
 ## 考虑一下setTimeout(fn,0)
@@ -73,7 +73,7 @@ Click the button!
 
 其实，`setTimeout(fn, 0)`与其他`setTimeout`执行过程相同，它在执行时，会在`0ms`（不过通常情况下，不会是0ms，会有一定的延迟，例如chrome下是4ms等）后将`fn`加入到任务队列之中，当栈为空时，执行`fn`。那么`setTimeout(fn, 0)`的作用是：**在下一个执行周期开始时，且栈为空时，执行该函数**。
 
-### setTimeout(fn, 0)的用途
+#### setTimeout(fn, 0)的用途
 
 `setTimeout(fn, 0)`的存在并不是扰乱大家的视线，它在某些场景下确实有其用武之地，但是不建议滥用它，否则你的程序的维护性会大大降低。
 
@@ -179,15 +179,15 @@ while (eventLoop.waitForTask()) {
 8. 判断栈为空，从`task`队列中，移入`timer()`函数至栈中执行，输出`setTimeout`
 9. 执行结束
 
-### 说明
+## 说明
 本篇文章参考和总结了一些互联网中的优秀的介绍事件循环的资料，在文末中列举了这些引用，读者若有不明白的地方可以直接参考这些一手资料得到更确切的表述。此外本篇文章也是本人学习`Event loop`概念的一个总结，因个人理解即水平限制，文中难免会存在表述错误的地方，望给予指正。
 
 最后，文中介绍的事件循环机制只是`brower`端的情况，`javascript`世界涉及的事件循环不止于此，例如服务端的`nodejs`执行环境的事件循环机制，以及`html5`提出的`web worker`标准之后，`javascript`就不再仅仅是单线程运行了，事件机制也与本文介绍的情况不尽相同，后续将继续学习、探究这些内容。
 
-### 参考/引用
+## 参考/引用
 > [js并发模型及事件循环](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)  
-> [Philip Roberts早期分享的Event loop内容](https://vimeo.com/96425312)
-> [针对Philip Roberts分享内容的总结](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
-> [microtask介绍](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
+> [Philip Roberts早期分享的Event loop内容](https://vimeo.com/96425312)  
+> [针对Philip Roberts分享内容的总结](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)  
+> [microtask介绍](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)  
 > [轻快愉悦的Event loop介绍](https://juejin.im/post/59e85eebf265da430d571f89/)
-> [你所不知道的setTimeout](https://jeffjade.com/2016/01/10/2016-01-10-javacript-setTimeout/)
+> [你所不知道的setTimeout](https://jeffjade.com/2016/01/10/2016-01-10-javacript-setTimeout/)  
