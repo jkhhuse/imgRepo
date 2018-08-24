@@ -35,12 +35,12 @@ Metadata.json：描述了Angular的组织形式，告诉Angular如何构建应�
 
 ##  组件库编译过程
 使用Promise.then形式同步执行如下操作：
-Setp1：css预处理
-Setp2：资源内联
-Setp3：编译typescript、生成metadata.json
-Setp4：rollup
-Setp5：构建生成UMD、uglify、ES、ES2015形式的源码
-Setp6：拷贝metadata.json及package.json到dist目录
+Setp1：css预处理  
+Setp2：资源内联  
+Setp3：编译typescript、生成metadata.json  
+Setp4：rollup  
+Setp5：构建生成UMD、uglify、ES、ES2015形式的源码  
+Setp6：拷贝metadata.json及package.json到dist目录  
 
 具体形式如下：
 
