@@ -192,5 +192,5 @@ while (eventLoop.waitForTask()) {
 > [Philip Roberts早期分享的Event loop内容](https://vimeo.com/96425312)  
 > [针对Philip Roberts分享内容的总结](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)  
 > [microtask介绍](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)  
-> [轻快愉悦的Event loop介绍](https://juejin.im/post/59e85eebf265da430d571f89/)
+> [轻快愉悦的Event loop介绍](https://juejin.im/post/59e85eebf265da430d571f89/)  
 > [你所不知道的setTimeout](https://jeffjade.com/2016/01/10/2016-01-10-javacript-setTimeout/)  
