@@ -2,6 +2,9 @@
 技术博客&工作记录存档，较为完整的记录放置在issue中
 
 ### Blog
+- [js event loop机制](https://github.com/jkhhuse/imgRepo/issues/12)
+- [Angular组件库脚手架搭建过程及背后原理 Angular](https://github.com/jkhhuse/imgRepo/issues/11)
+- [Angular的单向数据流 Angular](https://github.com/jkhhuse/imgRepo/issues/10)
 - [Angular6 升级指南](https://github.com/jkhhuse/imgRepo/issues/9)
 - [波浪动画效果](https://github.com/jkhhuse/imgRepo/issues/8)
 - [[Angular API] NgTemplateOutlet 理解](https://github.com/jkhhuse/imgRepo/issues/7)
