@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    归并排序
+</body>
+<script>
+let array = [ 6, 3, 1, 4, 2, 5 ];
+
+
+function mergeSort(array) {
+    let s = 0;
+    let l = array.length;
+    let m = Math.floor(l/2);
+    if(array.length < 2) {
+        return array;
+    }
+    let left = array.splice(s, m);
+    let right = array;
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right) {
+    const temp = [];
+    while(left.length >0 && right.length > 0) {
+        temp.push(left[0] <= right[0] ? left.shift() : right.shift());
+    }
+    return temp.concat(left, right);
+}
+
+const result = mergeSort(array);
+console.log(result);
+
+
+</script>
+</html>

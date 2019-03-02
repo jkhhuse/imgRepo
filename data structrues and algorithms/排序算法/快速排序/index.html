@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    快速排序(取值头元素作为枢纽值)
+</body>
+<script>
+
+function quickSort(array) {
+    if(array.length < 2) {
+        return array;
+    }
+    let pivot = array[0];
+    const less = [], greater = [];
+    for(let i=1; i<array.length; i++) {
+        if(array[i] < pivot) {
+            less.push(array[i]);
+        } else {
+            greater.push(array[i]);
+        }
+    }
+    return quickSort(less).concat([pivot], quickSort(greater));   
+}
+let array = [6,3,4,1,2,8,9,7,5];
+
+console.log(quickSort(array));
+</script>
+</html>

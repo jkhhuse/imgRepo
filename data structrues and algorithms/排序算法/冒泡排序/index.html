@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    冒泡排序
+</body>
+<script>
+let array = [ 6, 3, 1, 4, 2, 5 ];
+
+function bubbleSort(array) {
+    for(let i=0; i<array.length; i++) {
+        for(let j=i+1; j<array.length; j++) {
+            if(compare(array, i, j)) {
+                swap(array, i, j);
+            }
+        }
+    }
+}
+
+bubbleSort(array);
+console.log(array);
+
+function swap(array, i, j) {
+    let temp;
+    temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+}
+
+function compare(array, i, j) {
+    return array[i] > array[j] ? true : false;
+}
+</script>
+</html>

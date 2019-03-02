@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    希尔排序
+    关键点：步长
+</body>
+<script>
+let array = [ 6, 3, 1, 4, 2, 5 ];
+
+function shellSort(array, len) {
+    len = array.length;
+    while(len >= 1) {
+        for(let i=0; i<array.length; i++) {
+            for(let j=i+len; j>0; j=j-len) {
+                if(compare(array, j-len, j)) {
+                    swap(array, j-len, j);
+                }
+            }
+        }
+        len = Math.floor(len / 2);
+    }
+}
+
+shellSort(array);
+console.log(array);
+
+function swap(array, i, j) {
+    let temp;
+    temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+}
+
+function compare(array, i, j) {
+    return array[i] > array[j] ? true : false;
+}
+</script>
+</html>
