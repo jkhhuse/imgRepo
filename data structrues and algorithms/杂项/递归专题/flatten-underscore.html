@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  flatten underscore 的实现方式
+</body>
+<script>
+let array = [1, 2, 3, [4, 5], [6, [7, [8]]]];
+
+function flatten(input, shallow, strict, output) {
+  output = output || [];
+  let idx = output.length;
+  for(let i=0, len=input.length; i<len; i++) {
+    let value = input[i];
+    if(Array.isArray(value)) {
+      if(shallow) {
+        let l = value.length;
+        let j = 0;
+        while(j<l) {
+          output[idx++] = value[j++];
+        }
+      } else {
+        flatten(value, shallow, strict, output);
+        idx = output.length;
+      }
+    } else if(!strict) {
+      output[idx++] = value;
+    }
+  }
+  return output;
+}
+
+console.log(flatten(array, false, false))
+
+
+</script>
+</html>

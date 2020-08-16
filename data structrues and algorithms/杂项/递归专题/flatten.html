@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  数组扁平化, es6 实现
+</body>
+<script>
+  let array = [1, 2, [3, 4], [5, [6, [7]]]];
+
+  function flatten1(arr) {
+    while(arr.some(item => Array.isArray(item))) {
+      arr = [].concat(...arr);
+    }
+    return arr;
+  }
+
+  function flatten(arr) {
+    return arr.reduce((prev, cur) => {
+      if(Array.isArray(cur)) {
+        return prev.concat(flatten(cur));
+      } else {
+        return prev.concat(cur);
+      }
+    }, [])
+  }
+
+
+  console.log(flatten(array));
+
+</script>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    题目：写一个程序，实现功能 A: 去重 B:打平 
+    一个数组中的元素，这个数组大致为[array, object, undefined, true, false, '1'] 等
+    其中，array 中的子元素只用考虑简单类型，object 只用考虑值。
+    例如：
+    [ 
+      [1, '2', ['3', [5, 6]], undefined], 
+      {
+        key1: 1,
+        key2: {
+          key3: '2',
+          key4: 4,
+          key5: {
+            key6: null
+          }
+        }
+      },
+      1, 
+      '7',
+      true, 
+      false,
+      undefined,
+      null
+    ];
+    它的结果应该为: [1, '2', '3', 5, 6, undefined, 4, null, '7', true, false] 
+</body>
+<script>
+  let array = [ 
+    [1, '2', ['3', [5, 6]], undefined], 
+    {
+      key1: 1,
+      key2: {
+        key3: '2',
+        key4: 4,
+        key5: {
+          key6: null
+        }
+      }
+    },
+    1, 
+    '7',
+    true, 
+    false,
+    undefined,
+    null
+  ];
+
+  function flattenAndDupRemove(array) {
+    if(!array) return [];
+    let result = [];
+    array.forEach((item, index) => {
+      if (isBasicType(item)) {
+        result.push(item);
+      } else if (isArray(item)) {
+        result.push(...flattenArray([], item));
+      } else if (isObject(item)) {
+        result.push(...flattenObject([], item));
+      } else {
+        // 可能是 function 等, 不用处理它
+      }
+    })
+    return Array.from(new Set(result));
+  }
+
+  function isBasicType(item) {
+    let type = typeof item;
+    if (type === 'undefined' || type === 'number' || 
+      type === 'string' || type === 'boolean') {
+      return true;
+    } else if (type === 'object' && item === null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function isArray(item) {
+    if(item instanceof Array) {
+      return true;
+    }
+    return false;
+  }
+
+  function isObject(item) {
+    if(item instanceof Object) {
+      return true;
+    }
+    return false;
+  }
+
+  function flattenArray(result, item) {
+    if(item === []) {
+      return [];
+    }
+    item.forEach((ele, index) => {
+      if(ele instanceof Array) {
+        flattenArray(result, ele)
+      } else {
+        result.push(ele);
+      }
+    })
+    return result;
+  }
+
+  function flattenObject(result, arr) {
+    if(Object.keys(arr).length === 0) {
+      return [];
+    }
+    for(let i in arr) {
+      if(arr[i] instanceof Object) {
+        flattenObject(result, arr[i]);
+      } else {
+        result.push(arr[i]);
+      }
+    }
+    return result;
+  }
+
+  flattenAndDupRemove(array);
+
+</script>
+</html>

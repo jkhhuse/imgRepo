@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  call 的模拟实现  
+  call() 方法在使用一个指定的 this 值和若干个指定的参数值的前提下调用某个函数或方法。
+</body>
+<script>
+  var foo = {
+    value : 1
+  }
+  var bar = function (name, age) {
+    console.log(name)
+    console.log(age)
+    console.log(this.value)
+  }
+
+  // console.log(bar.call(foo));
+
+  // => 相当于
+  // var foo = {
+  //   value: 1,
+  //   bar = function () {
+  //     console.log(this.value)
+  //   }
+  // }
+
+  Function.prototype.call2 = function(context) {
+    context = context || window;
+    context.fn = this;
+    var args = [];
+    for(var i=1; i<arguments.length; i++) {
+      args.push('arguments['+i+']');
+    }
+    eval('context.fn(' + args.join(',') + ')');
+    delete context.fn;
+  }
+
+  console.log(bar.call2(foo,'jk',22));
+
+</script>
+</html>

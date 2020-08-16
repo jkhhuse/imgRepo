@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  深拷贝
+</body>
+<script>
+  let obj = {
+    a: 1,
+    b: 2,
+    c: {
+      d: 3
+    },
+    e: {
+      f: {
+        g: 4
+      }
+    }
+  }
+
+  function deepClone (obj) {
+    if(typeof obj !== 'object') return;
+    var newObj = obj instanceof Array ? [] : {};
+    for(let i in obj) {
+      if(obj.hasOwnProperty(i)) {
+        typeof obj[i] === 'object' ? newObj[i] = deepClone(obj[i]) : newObj[i] = obj[i]
+      }
+    }
+    return newObj;
+  }
+
+  console.log(deepClone(obj));
+
+</script>
+</html>

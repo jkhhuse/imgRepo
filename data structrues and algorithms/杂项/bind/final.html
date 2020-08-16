@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  xxx
+</body>
+<script>
+
+Function.prototype.bind2 = function (context, arr) {
+  context.fn = Object(this) || window;
+  var args = [];
+  var result;
+  if(!arr) {
+    result = context.fn();
+  } else {
+    for(let i=0; i<arr.length; i++) {
+      args.push('arr[' + i + ']');
+    }
+    result = eval('context.fn(' + args +')');
+  }
+  delete context.fn;
+  return result;
+}
+
+var foo = {
+  value: 1
+}
+
+var bar = function(name, age) {
+  return {
+    value: this.value,
+    name: name,
+    age: age
+  }
+}
+
+console.log(bar.bind2(foo, ['name', 22]));
+</script>
+</html>

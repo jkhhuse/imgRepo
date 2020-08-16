@@ -1,0 +1,51 @@
+hr {
+  margin: 10px auto;
+}
+
+
+.heartShaped {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  transform: rotate(45deg);
+  background: rgba(255, 20, 147, .85);
+  width: 140px;
+  line-height: 140px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+}
+.heartShaped > div::after {
+  content: '11'
+}
+/* .heartShaped:before,
+.heartShaped:after
+ {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -70px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: rgb(255, 20, 147);
+  z-index: -1;
+}
+.heartShaped:after{
+  top: -70px;
+  left: 0;
+}
+ */
+
+body {
+  font-size: 0;
+}
+.comment {
+  background: #444222;
+  width: 100%;
+}
+span{
+  color: red;
+  background: #fff;
+  font-size: 20px;
+}
